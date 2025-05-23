@@ -17,7 +17,6 @@ class AppOpenAdManager {
   void loadAppOpenAd() {
     AppOpenAd.load(
       adUnitId: AppStrings.ADMOB_APP_OPEN,
-      orientation: AppOpenAd.orientationPortrait,
       request: AdRequest(),
       adLoadCallback: AppOpenAdLoadCallback(
         onAdLoaded: (ad) {

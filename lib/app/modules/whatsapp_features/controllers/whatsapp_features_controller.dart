@@ -5,7 +5,7 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
-import 'package:image_gallery_saver/image_gallery_saver.dart';
+import 'package:saver_gallery/saver_gallery.dart';
 import 'package:flutter_video_info/flutter_video_info.dart';
 import 'package:video_thumbnail/video_thumbnail.dart';
 import 'package:path/path.dart';
@@ -180,7 +180,11 @@ class WhatsappFeaturesController extends GetxController
     String statusName = basename(whatsappImages[index].path);
     try {
       File newFile = await sourceFile.copy(dir + "/" + statusName);
-      var result = await ImageGallerySaver.saveFile(newFile.path);
+      var result = await SaverGallery.saveFile(
+        filePath: newFile.path,
+        fileName: statusName,
+        skipIfExists: false,
+      );
       if (await newFile.exists()) {
         whatsappImages[index].isdownloaded.value = true;
         EasyLoading.dismiss();
@@ -255,7 +259,11 @@ class WhatsappFeaturesController extends GetxController
     String statusName = basename(whatsappVideos[index].path);
     try {
       File newFile = await sourceFile.copy(dir + "/" + statusName);
-      var result = await ImageGallerySaver.saveFile(newFile.path);
+      var result = await SaverGallery.saveFile(
+        filePath: newFile.path,
+        fileName: statusName,
+        skipIfExists: false,
+      );
       if (await newFile.exists()) {
         whatsappVideos[index].isdownloaded.value = true;
         EasyLoading.dismiss();

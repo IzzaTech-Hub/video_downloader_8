@@ -456,12 +456,13 @@ class HomeController extends GetxController {
       final mimeType =
           'video/mp4'; // Adjust the MIME type according to your video format
 
-      await Share.shareFiles(
-        [filePath],
-        text: 'Sharing Video',
-        subject: 'Video Subject',
-        mimeTypes: [mimeType],
-      );
+      await Share.share(filePath, subject: 'Video Subject');
+      // await Share.shareFiles(
+      //   [filePath],
+      //   text: 'Sharing Video',
+      //   subject: 'Video Subject',
+      //   mimeTypes: [mimeType],
+      // );
     } catch (e) {
       print("Error sharing video: $e");
       // Handle any errors that occur during sharing.

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-import 'package:launch_review/launch_review.dart';
+import 'package:in_app_review/in_app_review.dart';
 // import 'package:ripple_animation/ripple_animation.dart';
 import 'package:share_plus/share_plus.dart';
 import '../../../routes/app_pages.dart';
@@ -185,10 +185,13 @@ class SettingsScreen extends GetView<SettingsController> {
                 "Rate us",
                 // style: GoogleFonts.pacifico(color: AppColors.black1)
               ),
-              onTap: () {
-                LaunchReview.launch(
-                  androidAppId: "com.allvideodownloader.vdmate.vmate.vidmake",
-                );
+              onTap: () async {
+                final InAppReview inAppReview = InAppReview.instance;
+                if (await inAppReview.isAvailable()) {
+                  inAppReview.openStoreListing(
+                    appStoreId: 'com.allvideodownloader.vdmate.vmate.vidmake',
+                  );
+                }
               },
             ),
             ListTile(

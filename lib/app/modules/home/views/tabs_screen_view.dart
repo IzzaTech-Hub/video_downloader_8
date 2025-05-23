@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
-import 'package:launch_review/launch_review.dart';
+import 'package:in_app_review/in_app_review.dart';
 import 'package:video_downloader_8/app/routes/app_pages.dart';
 import 'package:video_downloader_8/app/utils/CM.dart';
 import 'package:video_downloader_8/app/utils/images.dart';
@@ -39,11 +39,14 @@ class TabsScreenView extends GetView<TabsController> {
                 ),
               ),
               GestureDetector(
-                  onTap: () {
-                    LaunchReview.launch(
-                      androidAppId:
-                          "com.viddownloader.free.downloader.videodownloader",
-                    );
+                  onTap: () async {
+                    final InAppReview inAppReview = InAppReview.instance;
+                    if (await inAppReview.isAvailable()) {
+                      inAppReview.openStoreListing(
+                        appStoreId:
+                            'com.viddownloader.free.downloader.videodownloader',
+                      );
+                    }
                   },
                   child: drawer_widget(
                       CupertinoIcons.hand_thumbsup_fill, "Rate Us")),
@@ -107,11 +110,14 @@ class TabsScreenView extends GetView<TabsController> {
               padding:
                   EdgeInsets.only(right: SizeConfig.blockSizeHorizontal * 4),
               child: GestureDetector(
-                onTap: () {
-                  LaunchReview.launch(
-                    androidAppId:
-                        "com.viddownloader.free.downloader.videodownloader",
-                  );
+                onTap: () async {
+                  final InAppReview inAppReview = InAppReview.instance;
+                  if (await inAppReview.isAvailable()) {
+                    inAppReview.openStoreListing(
+                      appStoreId:
+                          'com.viddownloader.free.downloader.videodownloader',
+                    );
+                  }
                 },
                 child: Icon(
                   CupertinoIcons.hand_thumbsup_fill,
