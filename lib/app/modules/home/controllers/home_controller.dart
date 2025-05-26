@@ -952,7 +952,7 @@ class HomeController extends GetxController {
 
   void callPinterestApi(String link) async {
     print("Called Pinterest Api");
-    EasyLoading.show(status: "Loading...");
+    EasyLoading.show(status: "Loading..."); 
 
     final String apiUrl =
         'https://pinterest-video-and-image-downloader.p.rapidapi.com/pinterest?url=${Uri.encodeFull(link)}';

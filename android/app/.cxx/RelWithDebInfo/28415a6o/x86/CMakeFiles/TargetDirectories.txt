@@ -1,0 +1,2 @@
+E:/clone app/video_downloader_8/android/app/.cxx/RelWithDebInfo/28415a6o/x86/CMakeFiles/edit_cache.dir
+E:/clone app/video_downloader_8/android/app/.cxx/RelWithDebInfo/28415a6o/x86/CMakeFiles/rebuild_cache.dir
