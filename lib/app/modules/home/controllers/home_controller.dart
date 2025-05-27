@@ -278,6 +278,8 @@ class HomeController extends GetxController {
       );
       downloadingVideos.add(downloadingTask);
       videos.removeAt(index);
+      Get.snackbar("Video Downloaded", "Vist home to access.",
+          snackPosition: SnackPosition.BOTTOM, overlayColor: Colors.blueGrey);
       print("video List: $videos");
 
       //?Temp Implementation
@@ -839,13 +841,18 @@ class HomeController extends GetxController {
     print("Called Facebook Api");
     EasyLoading.show(status: "Loading...");
 
+    // final String apiUrl =
+    //     'https://facebook-video-downloader7.p.rapidapi.com/?url=${Uri.encodeFull(link)}';
+
     final String apiUrl =
-        'https://facebook-video-downloader7.p.rapidapi.com/?url=${Uri.encodeFull(link)}';
+        'https://facebook-video-downloader9.p.rapidapi.com/api/v1/videos/download?url=${Uri.encodeFull(link)}';
     print("Api Url ${apiUrl}");
 
     final headers = {
-      'X-RapidAPI-Key': '657de138e2msha94d49761460a5fp1666e0jsn8a5f3b481e79',
-      'X-RapidAPI-Host': 'facebook-video-downloader7.p.rapidapi.com',
+      // 'X-RapidAPI-Key': '657de138e2msha94d49761460a5fp1666e0jsn8a5f3b481e79',
+      'X-RapidAPI-Key': '9f35c984fdmshdc57b65eeb43993p1b7286jsn4acb2e4b7d35',
+      'X-RapidAPI-Host': 'facebook-video-downloader9.p.rapidapi.com',
+      // 'X-RapidAPI-Host': 'facebook-video-downloader7.p.rapidapi.com',
     };
 
     try {
@@ -857,7 +864,7 @@ class HomeController extends GetxController {
         final data = json.decode(response.body);
         print("Api Response ${data}");
 
-        String playUrl = data['sd'];
+        String playUrl = data['data']['download']['sd']['url'];
         String title = data['title'] ?? getRandomNumber().toString();
         if (title.length > 20) {
           title = title.substring(0, 20);
@@ -952,7 +959,7 @@ class HomeController extends GetxController {
 
   void callPinterestApi(String link) async {
     print("Called Pinterest Api");
-    EasyLoading.show(status: "Loading..."); 
+    EasyLoading.show(status: "Loading...");
 
     final String apiUrl =
         'https://pinterest-video-and-image-downloader.p.rapidapi.com/pinterest?url=${Uri.encodeFull(link)}';

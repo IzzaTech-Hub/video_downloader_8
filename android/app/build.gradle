@@ -30,7 +30,7 @@ if (flutterVersionName == null) {
 
 android {
     namespace "com.viddownloader.free.downloader.videodownloader"
-    compileSdkVersion 34
+    compileSdkVersion 35
     ndkVersion flutter.ndkVersion
 
     compileOptions {

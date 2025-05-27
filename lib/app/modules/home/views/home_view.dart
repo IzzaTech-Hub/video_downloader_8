@@ -453,11 +453,12 @@ class HomeView extends GetView<HomeController> {
     return InkWell(
       onTap: () {
         // AdMobAdsProvider.instance.showInterstitialAd(); //? commented by jamal
-        if (index == 0 || index == 7) {
-          controller.searchTextCTL.text = "www.facebook.com/watch";
-          controller.isBrowsing.value = true;
-          return;
-        } else if (index == 2) {
+        // if (index == 0 || index == 7) {
+        //   controller.searchTextCTL.text = "www.facebook.com/watch";
+        //   controller.isBrowsing.value = true;
+        //   return;
+        // } else
+        if (index == 2) {
           controller.searchTextCTL.text = 'www.instagram.com';
           controller.isBrowsing.value = true;
         } else {
