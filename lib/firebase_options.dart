@@ -27,10 +27,7 @@ class DefaultFirebaseOptions {
       case TargetPlatform.macOS:
         return macos;
       case TargetPlatform.windows:
-        throw UnsupportedError(
-          'DefaultFirebaseOptions have not been configured for windows - '
-          'you can reconfigure this by running the FlutterFire CLI again.',
-        );
+        return windows;
       case TargetPlatform.linux:
         throw UnsupportedError(
           'DefaultFirebaseOptions have not been configured for linux - '
@@ -44,38 +41,49 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions web = FirebaseOptions(
-    apiKey: 'AIzaSyBy015kXIR0XG6YaVKreSeoKQV4KIaTfHQ',
-    appId: '1:495721062433:web:f5fe13baf7d945f1f54360',
-    messagingSenderId: '495721062433',
-    projectId: 'flutter-downloader6',
-    authDomain: 'flutter-downloader6.firebaseapp.com',
-    storageBucket: 'flutter-downloader6.appspot.com',
-    measurementId: 'G-JWNB2Y8SJ1',
+    apiKey: 'AIzaSyBJQmF_DPgynmoJZZDWJT2QwS17L1Wg6pM',
+    appId: '1:771096097765:web:bfd3d20c84bfbe6854b50c',
+    messagingSenderId: '771096097765',
+    projectId: 'video-downloader-8',
+    authDomain: 'video-downloader-8.firebaseapp.com',
+    storageBucket: 'video-downloader-8.firebasestorage.app',
+    measurementId: 'G-YWY21LG41F',
   );
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyAokDrmQzCwUnlr2QdTdJBTSWtIW3deyms',
-    appId: '1:495721062433:android:5533556eb3ffebf6f54360',
-    messagingSenderId: '495721062433',
-    projectId: 'flutter-downloader6',
-    storageBucket: 'flutter-downloader6.appspot.com',
+    apiKey: 'AIzaSyA7APyQ-bnhq8BFSrZQkz36xEb-bvwW6KE',
+    appId: '1:771096097765:android:85780ea3a9b3a03e54b50c',
+    messagingSenderId: '771096097765',
+    projectId: 'video-downloader-8',
+    storageBucket: 'video-downloader-8.firebasestorage.app',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyAfo5u1ko3MdoPXvAkIpGBmAsh0wH8T0s4',
-    appId: '1:495721062433:ios:37ed77ca6b9a376af54360',
-    messagingSenderId: '495721062433',
-    projectId: 'flutter-downloader6',
-    storageBucket: 'flutter-downloader6.appspot.com',
-    iosBundleId: 'com.example.videoDownloader6',
+    apiKey: 'AIzaSyABWdyHyi02dY6AhkqCQT_tx1lReHCjz8g',
+    appId: '1:771096097765:ios:477b7fcf80e0c02054b50c',
+    messagingSenderId: '771096097765',
+    projectId: 'video-downloader-8',
+    storageBucket: 'video-downloader-8.firebasestorage.app',
+    iosBundleId: 'com.example.videoDownloader8',
   );
 
   static const FirebaseOptions macos = FirebaseOptions(
-    apiKey: 'AIzaSyAfo5u1ko3MdoPXvAkIpGBmAsh0wH8T0s4',
-    appId: '1:495721062433:ios:bb875079ed7ba296f54360',
-    messagingSenderId: '495721062433',
-    projectId: 'flutter-downloader6',
-    storageBucket: 'flutter-downloader6.appspot.com',
-    iosBundleId: 'com.example.videoDownloader6.RunnerTests',
+    apiKey: 'AIzaSyABWdyHyi02dY6AhkqCQT_tx1lReHCjz8g',
+    appId: '1:771096097765:ios:477b7fcf80e0c02054b50c',
+    messagingSenderId: '771096097765',
+    projectId: 'video-downloader-8',
+    storageBucket: 'video-downloader-8.firebasestorage.app',
+    iosBundleId: 'com.example.videoDownloader8',
   );
+
+  static const FirebaseOptions windows = FirebaseOptions(
+    apiKey: 'AIzaSyBJQmF_DPgynmoJZZDWJT2QwS17L1Wg6pM',
+    appId: '1:771096097765:web:2fb5354471d4231654b50c',
+    messagingSenderId: '771096097765',
+    projectId: 'video-downloader-8',
+    authDomain: 'video-downloader-8.firebaseapp.com',
+    storageBucket: 'video-downloader-8.firebasestorage.app',
+    measurementId: 'G-L7VK1JS9WQ',
+  );
+
 }

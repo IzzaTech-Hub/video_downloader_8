@@ -1,12 +1,14 @@
 import 'dart:async';
 import 'dart:math';
 
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:video_downloader_8/app/provider/admob_ads_provider.dart';
 
 class SplashController extends GetxController {
   //TODO: Implement HomeControlle
+
   bool? isFirstTime = true;
   final prefs = SharedPreferences.getInstance();
   // AppLovin_CTL appLovin_CTL = Get.find();
@@ -18,7 +20,12 @@ class SplashController extends GetxController {
   @override
   void onInit() async {
     super.onInit();
-    AdMobAdsProvider.instance.initialize(); //? commented by jamal
+    try {
+      await AdMobAdsProvider.instance.initialize(); //? commented by jamal
+    } catch (e) {
+      debugPrint("Error in SplashController: $e");
+    }
+
     Timer? timer;
     timer = Timer.periodic(Duration(milliseconds: 500), (_) {
       int n = Random().nextInt(10) + 5;

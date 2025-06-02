@@ -8,20 +8,26 @@ import 'package:flutter_downloader/flutter_downloader.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:get/get.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:video_downloader_8/firebase_options.dart';
 
 import 'app/routes/app_pages.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  try {
+    await MobileAds.instance.initialize();
+    print('AdMob initialized successfully');
+  } catch (e, s) {
+    print('Error initializing AdMob: $e\n$s');
+  }
   SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
     // DeviceOrientation.landscapeRight,
   ]);
 
-  WidgetsFlutterBinding.ensureInitialized();
+  // WidgetsFlutterBinding.ensureInitialized();
   // FlutterApplovinMax.initSDK();
-  // MobileAds.instance.initialize();
 
   //? commented by jamal start
   if (Platform.isAndroid) {
@@ -33,6 +39,11 @@ void main() async {
   await FlutterDownloader.initialize(
       debug: true // optional: set false to disable printing logs to console
       ); //? commented by jamal end
+  RequestConfiguration configuration = RequestConfiguration(
+    testDeviceIds: ['ABC123DEF4567890'],
+  );
+  MobileAds.instance.updateRequestConfiguration(configuration);
+
   runApp(const MyApp());
 }
 
