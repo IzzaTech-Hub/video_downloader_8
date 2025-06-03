@@ -69,6 +69,8 @@ android {
    }
    buildTypes {
        release {
+           minifyEnabled true
+           proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
            signingConfig signingConfigs.release
        }
    }
@@ -89,6 +91,7 @@ flutter {
 }
 
 dependencies {
+      implementation 'com.google.android.gms:play-services-ads:24.3.0'
     // implementation 'com.google.android.gms:play-services-ads:24.3.0' // or the latest stable
     // implementation 'com.google.android.gms:play-services-ads:24.2.0' // instead of 24.3.0
 

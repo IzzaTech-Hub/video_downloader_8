@@ -456,13 +456,13 @@ class SocialIconsView extends GetView<HomeController> {
                                     msg: "Please Enter Vimeo URL");
                               }
                             } else if (controller.selectedIndex.value == 7) {
-                              if (link.contains("facebook") ||
+                              if (link.contains("snapchat") ||
                                   link.contains("fb")) {
-                                controller.callFacebookApi(link);
+                                controller.callSnapchatApi(link);
                               } else {
                                 ComFunction.showInfoDialog(
                                   title: "Invalid URL",
-                                  msg: "Please enter FB Watch URL",
+                                  msg: "Please enter Snapchat URL",
                                 );
                               }
                             }

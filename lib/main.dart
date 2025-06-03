@@ -39,10 +39,6 @@ void main() async {
   await FlutterDownloader.initialize(
       debug: true // optional: set false to disable printing logs to console
       ); //? commented by jamal end
-  RequestConfiguration configuration = RequestConfiguration(
-    testDeviceIds: ['ABC123DEF4567890'],
-  );
-  MobileAds.instance.updateRequestConfiguration(configuration);
 
   runApp(const MyApp());
 }

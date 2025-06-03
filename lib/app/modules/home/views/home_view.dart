@@ -16,10 +16,23 @@ import '../controllers/home_controller.dart';
 import '../controllers/tabs_controller.dart';
 import 'myWebView.dart';
 
-class HomeView extends GetView<HomeController> {
-  TabsController _tabsController = Get.find();
+class HomeView extends StatefulWidget {
+  const HomeView({super.key});
 
+  @override
+  State<HomeView> createState() => _HomeViewState();
+}
+
+class _HomeViewState extends State<HomeView> {
+  HomeController controller = Get.find();
+  TabsController _tabsController = Get.find();
   // // // Banner Ad Implementation start // // //
+  @override
+  void initState() {
+    super.initState();
+    initBanner();
+    initNative();
+  }
 
   //? commented by jamal start
 
@@ -101,10 +114,10 @@ class HomeView extends GetView<HomeController> {
 
   @override
   Widget build(BuildContext context) {
-    initBanner(); //? commented by jamal
-    initNative(); //? commented by jamal
+    // initBanner(); //? commented by jamal
+    // initNative(); //? commented by jamal
     return Scaffold(
-      resizeToAvoidBottomInset: false,
+      // resizeToAvoidBottomInset: false,
       // backgroundColor: Color(0xFF1E1E1E),
       backgroundColor: Colors.grey.shade100,
       body: Container(
@@ -114,14 +127,15 @@ class HomeView extends GetView<HomeController> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 //? commented by jamal start
-                Obx(() => controller.isBrowsing.value
-                    ? Container()
-                    : isBannerLoaded.value &&
-                            AdMobAdsProvider.instance.isAdEnable.value
-                        ? Container(
-                            height: AdSize.banner.height.toDouble(),
-                            child: AdWidget(ad: myBanner))
-                        : Container()), //? commented by jamal end
+                // Obx(() => controller.isBrowsing.value
+                //     ? Container()
+                //     : isBannerLoaded.value &&
+                //             AdMobAdsProvider.instance.isAdEnable.value
+                //         ? Container(
+                //             height: AdSize.banner.height.toDouble(),
+                //             width: AdSize.banner.width.toDouble(),
+                //             child: AdWidget(ad: myBanner))
+                //         : Container()), //? commented by jamal end
 
                 verticalSpace(SizeConfig.blockSizeVertical),
                 Obx(() => controller.isBrowsing.value
@@ -172,20 +186,20 @@ class HomeView extends GetView<HomeController> {
                 //       )),
                 // verticalSpace(SizeConfig.blockSizeVertical),
                 //? commented by jamal start
-                Obx(
-                  () => controller.isBrowsing.value
-                      ? Container()
-                      : AdMobAdsProvider.instance.isAdEnable.value
-                          ? Center(
-                              child: Container(
-                                  margin: EdgeInsets.symmetric(
-                                      horizontal:
-                                          SizeConfig.blockSizeHorizontal * 5),
-                                  child: NativeAdMethed(
-                                      nativeAd, nativeAdIsLoaded)),
-                            )
-                          : Container(),
-                )
+                // Obx(
+                //   () => controller.isBrowsing.value
+                //       ? Container()
+                //       : AdMobAdsProvider.instance.isAdEnable.value
+                //           ? Center(
+                //               child: Container(
+                //                   margin: EdgeInsets.symmetric(
+                //                       horizontal:
+                //                           SizeConfig.blockSizeHorizontal * 5),
+                //                   child: NativeAdMethed(
+                //                       nativeAd, nativeAdIsLoaded)),
+                //             )
+                //           : Container(),
+                // )
 
                 //? commented by jamal end
 
@@ -404,7 +418,7 @@ class HomeView extends GetView<HomeController> {
             _selectApp("Pinterest", AppImages.pinterest, 4, 0xFF000000),
             _selectApp("Twitter", AppImages.twitter_ic, 5, 0xFF000000),
             _selectApp("Vimeo", AppImages.vimo_ic, 6, 0xFF000000),
-            _selectApp("FB Watch", AppImages.fb_watch_ic, 7, 0xFF000000),
+            _selectApp("Snapchat", AppImages.snapchat, 7, 0xFF000000),
             // _selectApp("Snack Video", AppImages.snack_ic, 8, 0xFF000000),
             // _selectApp("ShareChat", AppImages.sharechat_ic, 9, 0xFF000000),
             // _selectApp("Chingari", AppImages.chingari_ic, 10, 0xFF000000),
@@ -458,14 +472,14 @@ class HomeView extends GetView<HomeController> {
         //   controller.isBrowsing.value = true;
         //   return;
         // } else
-        if (index == 2) {
-          controller.searchTextCTL.text = 'www.instagram.com';
-          controller.isBrowsing.value = true;
-        } else {
-          controller.searchTextCTL.text = "";
-          Get.toNamed(Routes.SocialIconsView, arguments: index);
-          controller.selectedIndex.value = index;
-        }
+        // if (index == 2) {
+        //   controller.searchTextCTL.text = 'www.instagram.com';
+        //   controller.isBrowsing.value = true;
+        // } else {
+        controller.searchTextCTL.text = "";
+        Get.toNamed(Routes.SocialIconsView, arguments: index);
+        controller.selectedIndex.value = index;
+        // }
 
         //  else {
         //   if (index == 0) {
@@ -782,36 +796,50 @@ class HomeView extends GetView<HomeController> {
                                 // controller.searchTextCTL.text = link;
                                 // controller.isBrowsing.value = true;
                               } else {
-                                if (link.contains("facebook") ||
-                                    link.contains("fb")) {
-                                  controller.searchTextCTL.text = link;
-                                  controller.isBrowsing.value = true;
-                                  // controller.callFacebookApi(link);
+                                // if (link.contains("facebook") ||
+                                //     link.contains("fb")) {
+                                //   controller.searchTextCTL.text = link;
+                                //   controller.isBrowsing.value = true;
+                                //   // controller.callFacebookApi(link);
+                                // } else {
+                                // if (link.contains("instagram")) {
+                                //   controller.searchTextCTL.text = link;
+                                //   controller.isBrowsing.value = true;
+                                //   // controller.callInstagramApi(link);
+                                // } else {
+                                if (link.contains("pin")) {
+                                  controller.callPinterestApi(link);
+                                  // controller.searchTextCTL.text = link;
+                                  // controller.isBrowsing.value = true;
                                 } else {
-                                  if (link.contains("instagram")) {
-                                    controller.searchTextCTL.text = link;
-                                    controller.isBrowsing.value = true;
-                                    // controller.callInstagramApi(link);
+                                  if (link.contains("l.likee")) {
+                                    // controller.searchTextCTL.text = link;
+                                    // controller.isBrowsing.value = true;
+                                    controller.callLikeeApi(link);
                                   } else {
-                                    if (link.contains("pin")) {
-                                      controller.callPinterestApi(link);
-                                      // controller.searchTextCTL.text = link;
-                                      // controller.isBrowsing.value = true;
+                                    if (link.contains("x.com")) {
+                                      controller.callTwitterApi(link);
                                     } else {
-                                      if (link.contains("l.likee")) {
-                                        // controller.searchTextCTL.text = link;
-                                        // controller.isBrowsing.value = true;
-                                        controller.callLikeeApi(link);
+                                      if (link.contains("vimeo.com")) {
+                                        controller.callVimeoApi(link);
                                       } else {
-                                        if (link.contains("x.com")) {
-                                          controller.callTwitterApi(link);
+                                        if (link.contains("snapchat")) {
+                                          controller.callSnapchatApi(link);
                                         } else {
-                                          if (link.contains("vimeo.com")) {
-                                            controller.callVimeoApi(link);
+                                          if (link.contains("fb") ||
+                                              link.contains("facebook")) {
+                                            controller.callFacebookApi(link);
+                                          } else {
+                                            if (link.contains("snapchat")) {
+                                              controller.callSnapchatApi(link);
+                                            }
                                           }
                                         }
                                       }
                                     }
+
+                                    // }
+                                    // }
                                   }
                                 }
                               }

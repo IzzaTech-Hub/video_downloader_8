@@ -106,37 +106,25 @@ class HomeController extends GetxController {
       return;
     }
     _port.listen((dynamic data) async {
-      // if (debug) {
-      //   print('UI Isolate Callback: $data');
-      // }
-
       String? id = data[0];
-      DownloadTaskStatus? status = DownloadTaskStatus.values[data[1] as int];
+      DownloadTaskStatus status = DownloadTaskStatus.values[data[1]];
       int? progress = data[2];
+
+      print("Received update - id: $id, status: $status, progress: $progress");
+
+      // Update progress
       for (DownloadingVideo video in downloadingVideos) {
         if (video.taskId == id) {
           video.progress.value = progress!.toDouble() / 100;
-          // var downloadedSize = (video.progress.value) * video.size;
-          // var downloadedSizeinMB = downloadedSize / 1024 / 1024;
-          // video.downloadedSize.value =
-          //     downloadedSize.toStringAsFixed(2) + " MB";
-          print("Downloading Progress: ${video.progress.value}");
-          // print("Downloaded Size: ${video.downloadedSize.value}");
-          if (status == DownloadTaskStatus.failed) {}
-          if (status == DownloadTaskStatus.complete) {
-            print("Download Complete");
-            downloadingVideos.removeWhere((element) => element.taskId == id);
-            await getDir();
-          }
         }
       }
-      if (taskId == id) {
-        print("Progress: $progress");
 
-        if (status == DownloadTaskStatus.complete) {}
-        if (status == DownloadTaskStatus.failed) {
-          print("Download Failed From Port..");
-        }
+      // Remove completed or failed tasks
+      if (status == DownloadTaskStatus.complete ||
+          status == DownloadTaskStatus.failed) {
+        print("Removing completed or failed video: $id");
+        downloadingVideos.removeWhere((video) => video.taskId == id);
+        await getDir(); // optional follow-up
       }
     });
   }
@@ -892,6 +880,69 @@ class HomeController extends GetxController {
       }
     } catch (error) {
       print("Facebook Api Catch $error");
+      EasyLoading.dismiss();
+      EasyLoading.showError("Could not fetch");
+
+      print(error);
+    }
+  }
+
+  void callSnapchatApi(String link) async {
+    print("Called Snapchat Api");
+    EasyLoading.show(status: "Loading...");
+
+    // final String apiUrl =
+    //     'https://facebook-video-downloader7.p.rapidapi.com/?url=${Uri.encodeFull(link)}';
+
+    final String apiUrl =
+        'https://snapchat3.p.rapidapi.com/getSpotlightByLink?spotlight_link=${Uri.encodeFull(link)}';
+    print("Api Url ${apiUrl}");
+
+    final headers = {
+      // 'X-RapidAPI-Key': '657de138e2msha94d49761460a5fp1666e0jsn8a5f3b481e79',
+      'X-RapidAPI-Key': '9f35c984fdmshdc57b65eeb43993p1b7286jsn4acb2e4b7d35',
+      'X-RapidAPI-Host': 'snapchat3.p.rapidapi.com',
+      // 'X-RapidAPI-Host': 'facebook-video-downloader7.p.rapidapi.com',
+    };
+
+    try {
+      final response = await http.get(Uri.parse(apiUrl), headers: headers);
+
+      if (response.statusCode == 200) {
+        print("Snapchat Api Response 200");
+
+        final data = json.decode(response.body);
+        print("Api Response ${data}");
+
+        String playUrl =
+            data['data']['story']['snapList'][0]['snapUrls']['mediaUrl'];
+        String title = data['title'] ?? getRandomNumber().toString();
+        if (title.length > 20) {
+          title = title.substring(0, 20);
+        }
+        title = title + "_" + getRandomNumber().toString();
+        print("Title_snapchat: $title");
+
+        print(data);
+
+        Video newVideo = Video(
+          name: "VID_" + title,
+          contentType: "",
+          link: playUrl,
+          // size: video_size,
+        );
+        videos.addIf(videos.every((element) => element.link != link), newVideo);
+        _showDownloadDialogue();
+        EasyLoading.dismiss();
+      } else {
+        print("Snapchat Api Falied to load Data");
+        EasyLoading.dismiss();
+        EasyLoading.showError("Could not fetch");
+
+        throw Exception('Failed to load data');
+      }
+    } catch (error) {
+      print("snapchat Api Catch $error");
       EasyLoading.dismiss();
       EasyLoading.showError("Could not fetch");
 

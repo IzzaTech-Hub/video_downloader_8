@@ -38,13 +38,13 @@ class AdMobAdsProvider {
   DateTime? _lastInterstitialShownTime;
   Future<void> initialize() async {
     try {
-      RequestConfiguration(testDeviceIds: ["48EB03B28964CF26EC2FB322A74E47DD"]);
+      // RequestConfiguration(testDeviceIds: ["48EB03B28964CF26EC2FB322A74E47DD"]);
       _lastInterstitialShownTime =
           DateTime.now().subtract(Duration(seconds: 50));
       _createInterstitialAd();
       createRewardedAd();
-      initBanner();
-      appOpenLoad();
+      // initBanner();
+      // appOpenLoad();
     } catch (e, s) {
       print('Error in initialize(): $e\n$s');
     }
