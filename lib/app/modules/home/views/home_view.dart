@@ -124,20 +124,21 @@ class _HomeViewState extends State<HomeView> {
           height: SizeConfig.screenHeight,
           child: SingleChildScrollView(
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+              // crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                verticalSpace(SizeConfig.blockSizeVertical * 2),
                 //? commented by jamal start
-                // Obx(() => controller.isBrowsing.value
-                //     ? Container()
-                //     : isBannerLoaded.value &&
-                //             AdMobAdsProvider.instance.isAdEnable.value
-                //         ? Container(
-                //             height: AdSize.banner.height.toDouble(),
-                //             width: AdSize.banner.width.toDouble(),
-                //             child: AdWidget(ad: myBanner))
-                //         : Container()), //? commented by jamal end
+                Obx(() => controller.isBrowsing.value
+                    ? Container()
+                    : isBannerLoaded.value &&
+                            AdMobAdsProvider.instance.isAdEnable.value
+                        ? Container(
+                            height: AdSize.banner.height.toDouble(),
+                            width: AdSize.banner.width.toDouble(),
+                            child: AdWidget(ad: myBanner))
+                        : Container()), //? commented by jamal end
 
-                verticalSpace(SizeConfig.blockSizeVertical),
+                verticalSpace(SizeConfig.blockSizeVertical * 2),
                 Obx(() => controller.isBrowsing.value
                     ? Container(
                         height: SizeConfig.blockSizeVertical * 77,
@@ -186,20 +187,20 @@ class _HomeViewState extends State<HomeView> {
                 //       )),
                 // verticalSpace(SizeConfig.blockSizeVertical),
                 //? commented by jamal start
-                // Obx(
-                //   () => controller.isBrowsing.value
-                //       ? Container()
-                //       : AdMobAdsProvider.instance.isAdEnable.value
-                //           ? Center(
-                //               child: Container(
-                //                   margin: EdgeInsets.symmetric(
-                //                       horizontal:
-                //                           SizeConfig.blockSizeHorizontal * 5),
-                //                   child: NativeAdMethed(
-                //                       nativeAd, nativeAdIsLoaded)),
-                //             )
-                //           : Container(),
-                // )
+                Obx(
+                  () => controller.isBrowsing.value
+                      ? Container()
+                      : AdMobAdsProvider.instance.isAdEnable.value
+                          ? Center(
+                              child: Container(
+                                  margin: EdgeInsets.symmetric(
+                                      horizontal:
+                                          SizeConfig.blockSizeHorizontal * 5),
+                                  child: NativeAdMethed(
+                                      nativeAd, nativeAdIsLoaded)),
+                            )
+                          : Container(),
+                )
 
                 //? commented by jamal end
 
@@ -418,7 +419,7 @@ class _HomeViewState extends State<HomeView> {
             _selectApp("Pinspire", AppImages.pinterest, 4, 0xFF000000),
             _selectApp("Twidder", AppImages.twitter_ic, 5, 0xFF000000),
             _selectApp("VibeMotion", AppImages.vimo_ic, 6, 0xFF000000),
-            _selectApp("GhostTalk", AppImages.snapchat, 7, 0xFF000000),
+            // _selectApp("GhostTalk", AppImages.snapchat, 7, 0xFF000000),
             // _selectApp("Snack Video", AppImages.snack_ic, 8, 0xFF000000),
             // _selectApp("ShareChat", AppImages.sharechat_ic, 9, 0xFF000000),
             // _selectApp("Chingari", AppImages.chingari_ic, 10, 0xFF000000),

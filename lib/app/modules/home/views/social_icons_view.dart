@@ -111,10 +111,9 @@ class SocialIconsView extends GetView<HomeController> {
         ),
         leading: GestureDetector(
             onTap: () {
-              AdMobAdsProvider.instance
-                  .showInterstitialAd(); //? Commented by jamal
+              // Use ComFunction to show ad and navigate back
               controller.searchTextCTL.clear();
-              Get.back();
+              ComFunction.navigateBackWithAd();
             },
             child: Icon(
               Icons.arrow_back_ios,

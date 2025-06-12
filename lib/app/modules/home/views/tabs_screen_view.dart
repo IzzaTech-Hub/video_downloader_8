@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 import 'package:in_app_review/in_app_review.dart';
+import 'package:video_downloader_8/app/provider/admob_ads_provider.dart';
 import 'package:video_downloader_8/app/routes/app_pages.dart';
 import 'package:video_downloader_8/app/utils/CM.dart';
 import 'package:video_downloader_8/app/utils/images.dart';
@@ -180,7 +181,8 @@ class TabsScreenView extends GetView<TabsController> {
                             borderRadius: BorderRadius.circular(50),
                             // radius: 5,
                             onTap: () {
-                              controller.tabIndex.value = 0;
+                              // Use changeTabIndex instead of directly setting the value
+                              controller.changeTabIndex(0);
                               homeController.searchTextCTL.text = "";
                               homeController.isBrowsing.value = false;
                               homeController.videos.clear();
@@ -261,7 +263,8 @@ class TabsScreenView extends GetView<TabsController> {
                           child: InkWell(
                             borderRadius: BorderRadius.circular(50),
                             onTap: () {
-                              controller.tabIndex.value = 2;
+                              // Use changeTabIndex instead of directly setting the value
+                              controller.changeTabIndex(2);
                               // controller.appLovin_CTL.showInterAd();
                               // controller.googleAdsCTL.showInterstitialAd();
                             },
@@ -348,7 +351,8 @@ class TabsScreenView extends GetView<TabsController> {
 
   Future<bool> _onWillPop() async {
     if (controller.tabIndex.value != 0) {
-      controller.tabIndex.value = 0;
+      // Use changeTabIndex instead of directly setting the value
+      controller.changeTabIndex(0);
       return false;
     } else {
       if (homeController.searchTextCTL.text.isNotEmpty) {
@@ -357,6 +361,8 @@ class TabsScreenView extends GetView<TabsController> {
 
         return false;
       } else {
+        // Show exit dialog - potentially show ad before exit
+        AdMobAdsProvider.instance.showInterstitialAd();
         ComFunction.showExitDialog(title: "Exit", msg: "Do You want to exit?");
       }
     }

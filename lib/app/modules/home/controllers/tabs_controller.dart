@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:video_downloader_8/app/provider/admob_ads_provider.dart';
+import 'package:video_downloader_8/app/provider/app_open_admanager.dart';
 import 'package:video_downloader_8/app/utils/app_strings.dart';
 
 class TabsController extends GetxController {
@@ -17,6 +18,15 @@ class TabsController extends GetxController {
 
   final remoteConfig = FirebaseRemoteConfig.instance; //? Commented by jamal
 
+  // Track last ad show time to limit frequency
+  DateTime? lastAdShowTime;
+
+  // Reference to app open ad manager
+  final AppOpenAdManager _appOpenAdManager = AppOpenAdManager();
+
+  // Minimum seconds between ads
+  final int minSecondsBetweenAds = 30;
+
   @override
   void onInit() async {
     //? Commented by jamal start
@@ -25,13 +35,14 @@ class TabsController extends GetxController {
       minimumFetchInterval: const Duration(minutes: 5),
     ));
 
-    await remoteConfig.setDefaults(const {
+    // Use AppStrings values as defaults instead of hardcoded test IDs
+    await remoteConfig.setDefaults({
       "isAdEnable": false,
-      "native_ad": "ca-app-pub-3940256099942544/2247696110",
-      "banner_ad": "ca-app-pub-3940256099942544/6300978111",
-      "inter_ad": "ca-app-pub-3940256099942544/1033173712",
-      "appopen_ad": "ca-app-pub-3940256099942544/3419835294",
-      "app_id": "ca-app-pub-7919904592089531~9888122054"
+      "native_ad": AppStrings.ADMOB_NATIVE,
+      "banner_ad": AppStrings.ADMOB_BANNER,
+      "inter_ad": AppStrings.ADMOB_INTERSTITIAL,
+      "appopen_ad": AppStrings.ADMOB_APP_OPEN,
+      "app_id": AppStrings.ADMOB_APP_ID // Use the constant from AppStrings
     });
 
     remoteConfig.onConfigUpdated.listen((event) async {
@@ -59,6 +70,10 @@ class TabsController extends GetxController {
     });
     //? Commented by jamal end
     super.onInit();
+    lastAdShowTime = DateTime.now().subtract(Duration(seconds: 60));
+
+    // Ensure app open ad is loaded
+    _appOpenAdManager.loadAppOpenAd();
   }
 
   @override
@@ -79,5 +94,29 @@ class TabsController extends GetxController {
     if (!await launchUrl(_url)) {
       throw Exception('Could not launch $_url');
     }
+  }
+
+  void changeTabIndex(int index) {
+    // Show ad if enough time has passed since last ad
+    if (shouldShowAd()) {
+      // Try to use app open ad first if available
+      if (_appOpenAdManager.isAdAvailable &&
+          _appOpenAdManager.canShowAppOpenAd) {
+        _appOpenAdManager.showAdIfAvailable();
+      } else {
+        // Fall back to interstitial ad
+        AdMobAdsProvider.instance.showInterstitialAd();
+      }
+      lastAdShowTime = DateTime.now();
+    }
+
+    tabIndex.value = index;
+  }
+
+  bool shouldShowAd() {
+    if (lastAdShowTime == null) return true;
+
+    Duration timeSinceLastAd = DateTime.now().difference(lastAdShowTime!);
+    return timeSinceLastAd.inSeconds >= minSecondsBetweenAds;
   }
 }

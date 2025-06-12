@@ -34,7 +34,7 @@ class AdMobAdsProvider {
       'ca-app-pub-3940256099942544/1033173712'; // TEST ID
 
   int maxFailedLoadAttempts = 3;
-  int adShowDelay = 30;
+  int adShowDelay = 10;
   DateTime? _lastInterstitialShownTime;
   Future<void> initialize() async {
     try {

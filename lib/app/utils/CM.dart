@@ -4,6 +4,8 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
+import 'package:video_downloader_8/app/provider/admob_ads_provider.dart';
+import 'package:video_downloader_8/app/provider/app_open_admanager.dart';
 import 'package:video_downloader_8/app/utils/size_config.dart';
 import 'colors.dart';
 
@@ -22,6 +24,61 @@ class ComFunction {
     }
   }
 
+  // Last time an ad was shown
+  static DateTime? _lastAdShowTime;
+  
+  // Reference to app open ad manager
+  static final AppOpenAdManager _appOpenAdManager = AppOpenAdManager();
+  
+  // Minimum seconds between ads to avoid excessive ads
+  static final int _minSecondsBetweenAds = 20;
+  
+  // Initialize ad components
+  static void initAds() {
+    _lastAdShowTime = DateTime.now().subtract(Duration(seconds: 30));
+    _appOpenAdManager.loadAppOpenAd();
+  }
+  
+  // Navigate to a new page with ad
+  static Future<dynamic> navigateWithAd(String routeName, {dynamic arguments}) async {
+    _showAdIfEligible();
+    return await Get.toNamed(routeName, arguments: arguments);
+  }
+  
+  // Navigate and replace current page with ad
+  static Future<dynamic> navigateAndReplaceWithAd(String routeName, {dynamic arguments}) async {
+    _showAdIfEligible();
+    return await Get.offAndToNamed(routeName, arguments: arguments);
+  }
+  
+  // Navigate back with ad
+  static void navigateBackWithAd() {
+    _showAdIfEligible();
+    Get.back();
+  }
+  
+  // Show ad if enough time has passed since last ad
+  static void _showAdIfEligible() {
+    if (_shouldShowAd()) {
+      // Prefer app open ad if available
+      if (_appOpenAdManager.isAdAvailable && _appOpenAdManager.canShowAppOpenAd) {
+        _appOpenAdManager.showAdIfAvailable();
+      } else {
+        // Fall back to interstitial ad
+        AdMobAdsProvider.instance.showInterstitialAd();
+      }
+      _lastAdShowTime = DateTime.now();
+    }
+  }
+  
+  // Check if we should show an ad based on time since last ad
+  static bool _shouldShowAd() {
+    if (_lastAdShowTime == null) return true;
+    
+    Duration timeSinceLastAd = DateTime.now().difference(_lastAdShowTime!);
+    return timeSinceLastAd.inSeconds >= _minSecondsBetweenAds;
+  }
+
   static showExitDialog({
     required String title,
     required String msg,
@@ -35,7 +92,16 @@ class ComFunction {
           // Get.back();
         },
         onConfirm: () {
-          SystemNavigator.pop();
+          // Show an ad before exiting if possible
+          if (_appOpenAdManager.isAdAvailable) {
+            _appOpenAdManager.forceShowAppOpenAd();
+            // Give the ad time to show before exiting
+            Future.delayed(Duration(milliseconds: 500), () {
+              SystemNavigator.pop();
+            });
+          } else {
+            SystemNavigator.pop();
+          }
         },
         titleStyle: TextStyle(color: Colors.blue),
         confirmTextColor: AppColors.white);

@@ -27,9 +27,8 @@ class HowToScreenView extends GetView<HowToScreenController> {
                     Spacer(),
                     GestureDetector(
                       onTap: () {
-                        Get.back();
-                        Get.offAllNamed(Routes.TabsScreenView);
-                        // Get.put(AppLovin_CTL());
+                        // Use the new navigation method with ad
+                        controller.navigateToHomeWithAd();
                       },
                       child: Icon(
                         Icons.skip_next_rounded,

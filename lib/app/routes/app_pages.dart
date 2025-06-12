@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import '../middleware/ad_middleware.dart';
 import '../modules/home/bindings/home_binding.dart';
 import '../modules/home/bindings/settings_binding.dart';
 import '../modules/home/bindings/social_icons_view_binding.dart';
@@ -28,26 +29,31 @@ class AppPages {
       name: _Paths.HOME,
       page: () => HomeView(),
       binding: HomeBinding(),
+      middlewares: [AdMiddleware()],
     ),
     GetPage(
       name: _Paths.TabsScreenView,
       page: () => TabsScreenView(),
       binding: TabsBinding(),
+      middlewares: [AdMiddleware()],
     ),
     GetPage(
       name: _Paths.SettingsScreen,
       page: () => SettingsScreen(),
       binding: SettingBinding(),
+      middlewares: [AdMiddleware()],
     ),
     GetPage(
       name: _Paths.VideoPlayer,
       page: () => VideoPlayerScreen(),
       binding: VideoPlayerBinding(),
+      middlewares: [AdMiddleware()],
     ),
     GetPage(
       name: _Paths.WHATSAPP_FEATURES,
       page: () => WhatsappFeaturesView(),
       binding: WhatsappFeaturesBinding(),
+      middlewares: [AdMiddleware()],
     ),
     GetPage(
       name: _Paths.HOW_TO_SCREEN,
@@ -63,6 +69,7 @@ class AppPages {
       name: _Paths.SocialIconsView,
       page: () => SocialIconsView(),
       binding: SocialIconsViewBinding(),
+      middlewares: [AdMiddleware()],
     ),
   ];
 }

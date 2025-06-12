@@ -9,6 +9,8 @@ import '../../../utils/colors.dart';
 import '../../../utils/images.dart';
 import '../../../utils/size_config.dart';
 import '../controllers/settings_controller.dart';
+import '../../../utils/CM.dart';
+// import '../../../app/provider/admob_ads_provider.dart';
 
 class SettingsScreen extends GetView<SettingsController> {
   SettingsScreen({Key? key}) : super(key: key);
@@ -71,7 +73,8 @@ class SettingsScreen extends GetView<SettingsController> {
         ),
         leading: InkWell(
           onTap: () {
-            Get.back();
+            // Use ComFunction to show ad and navigate back
+            ComFunction.navigateBackWithAd();
           },
           child: Icon(
             Icons.arrow_back_ios,

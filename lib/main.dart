@@ -10,16 +10,38 @@ import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:get/get.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:video_downloader_8/firebase_options.dart';
+import 'package:video_downloader_8/app/provider/app_open_admanager.dart';
+import 'package:video_downloader_8/app/provider/app_lifecycle_reactor.dart';
+import 'package:video_downloader_8/app/services/navigation_service.dart';
+import 'package:video_downloader_8/app/utils/CM.dart';
 
 import 'app/routes/app_pages.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   try {
+    // Initialize with the correct app ID
     await MobileAds.instance.initialize();
     print('AdMob initialized successfully');
+
+    // Initialize AppOpenAdManager
+    final appOpenAdManager = AppOpenAdManager();
+    appOpenAdManager.loadAppOpenAd();
+
+    // Initialize AppLifecycleReactor
+    final appLifecycleReactor =
+        AppLifecycleReactor(appOpenAdManager: appOpenAdManager);
+    appLifecycleReactor.listenToAppStateChanges();
+
+    // Initialize NavigationService
+    NavigationService().init();
+
+    // Initialize ComFunction ads
+    ComFunction.initAds();
+
+    print('App open ads initialized');
   } catch (e, s) {
-    print('Error initializing AdMob: $e\n$s');
+    print('Error initializing AdMob or app open ads: $e\n$s');
   }
   SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
