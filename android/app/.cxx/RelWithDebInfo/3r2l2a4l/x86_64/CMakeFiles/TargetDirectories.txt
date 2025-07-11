@@ -1,0 +1,2 @@
+C:/IzzaTechHub/video_downloader_8/android/app/.cxx/RelWithDebInfo/3r2l2a4l/x86_64/CMakeFiles/edit_cache.dir
+C:/IzzaTechHub/video_downloader_8/android/app/.cxx/RelWithDebInfo/3r2l2a4l/x86_64/CMakeFiles/rebuild_cache.dir

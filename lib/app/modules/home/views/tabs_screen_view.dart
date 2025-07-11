@@ -217,48 +217,48 @@ class TabsScreenView extends GetView<TabsController> {
                             ),
                           ),
                         ),
-                        // Expanded(
-                        //   child: InkWell(
-                        //     borderRadius: BorderRadius.circular(50),
-                        //     onTap: () {
-                        //       controller.tabIndex.value = 1;
-                        //       // controller.appLovin_CTL.showInterAd();
-                        //     },
-                        //     child: FittedBox(
-                        //       child: Column(
-                        //         children: [
-                        //           Image.asset(AppImages.progressBar,
-                        //               height:
-                        //                   SizeConfig.blockSizeHorizontal * 20,
-                        //               color: controller.tabIndex.value == 1
-                        //                   ? AppColors.themeColor
-                        //                   : null),
-                        //           // Icon(
-                        //           //   Icons.download,
-                        //           //   size: SizeConfig.blockSizeHorizontal * 20,
-                        //           //   color: controller.tabIndex.value == 1
-                        //           //       ? AppColors.themeColor
-                        //           //       : AppColors.grey,
-                        //           // ),
-                        //           verticalSpace(
-                        //               SizeConfig.blockSizeVertical * 1),
-                        //           Text(
-                        //             "Progress",
-                        //             style: TextStyle(
-                        //                 color: controller.tabIndex.value == 1
-                        //                     ? AppColors.themeColor
-                        //                     : AppColors.grey,
-                        //                 fontSize: controller.tabIndex.value == 1
-                        //                     ? SizeConfig.blockSizeHorizontal *
-                        //                         10
-                        //                     : SizeConfig.blockSizeHorizontal *
-                        //                         7),
-                        //           )
-                        //         ],
-                        //       ),
-                        //     ),
-                        //   ),
-                        // ),
+                        Expanded(
+                          child: InkWell(
+                            borderRadius: BorderRadius.circular(50),
+                            onTap: () {
+                              controller.tabIndex.value = 1;
+                              // controller.appLovin_CTL.showInterAd();
+                            },
+                            child: FittedBox(
+                              child: Column(
+                                children: [
+                                  Image.asset(AppImages.progressBar,
+                                      height:
+                                          SizeConfig.blockSizeHorizontal * 20,
+                                      color: controller.tabIndex.value == 1
+                                          ? AppColors.themeColor
+                                          : null),
+                                  // Icon(
+                                  //   Icons.download,
+                                  //   size: SizeConfig.blockSizeHorizontal * 20,
+                                  //   color: controller.tabIndex.value == 1
+                                  //       ? AppColors.themeColor
+                                  //       : AppColors.grey,
+                                  // ),
+                                  verticalSpace(
+                                      SizeConfig.blockSizeVertical * 1),
+                                  Text(
+                                    "Progress",
+                                    style: TextStyle(
+                                        color: controller.tabIndex.value == 1
+                                            ? AppColors.themeColor
+                                            : AppColors.grey,
+                                        fontSize: controller.tabIndex.value == 1
+                                            ? SizeConfig.blockSizeHorizontal *
+                                                10
+                                            : SizeConfig.blockSizeHorizontal *
+                                                7),
+                                  )
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
                         Expanded(
                           child: InkWell(
                             borderRadius: BorderRadius.circular(50),
