@@ -20,7 +20,7 @@ class AppImages {
   static const snapchat = "assets/images/snapchat.png";
   // static const fb_watch = "assets/images/fb_watch.png";
   // static const main_icon = "assets/images/main_icon.png";
-  static const main_icon = "assets/images/main_icon.jpg";
+  static const main_icon = "assets/images/main_icon.png";
   static const splash_icon = "assets/images/splash_icon.png";
   static const menu = "assets/images/menu.png";
   static const empty = "assets/images/empty.png";
